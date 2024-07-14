@@ -36,7 +36,7 @@ async def test_usecases_query_should_return_success():
     result = await product_usecase.query()
 
     assert isinstance(result, List)
-    assert len(result) > 1
+    assert len(result) > 1 # garantindo a existencia de dados
 
 
 async def test_usecases_update_should_return_success(product_up, product_inserted):

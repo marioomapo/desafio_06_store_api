@@ -5,13 +5,13 @@ import uuid
 from bson import Decimal128
 from pydantic import UUID4, BaseModel, Field, model_serializer
 
-
+# na responsabilidade de preencher campos como id, created_at, update_at que vão para o banco de dados
 class CreateBaseModel(BaseModel):
     id: UUID4 = Field(default_factory=uuid.uuid4)
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
-    @model_serializer
+    @model_serializer # realizando a conversao Decimal para Decimal128
     def set_model(self) -> dict[str, Any]:
         self_dict = dict(self)
 

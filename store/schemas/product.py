@@ -10,6 +10,7 @@ class ProductBase(BaseSchemaMixin):
     quantity: int = Field(..., description="Product quantity")
     price: Decimal = Field(..., description="Product price")
     status: bool = Field(..., description="Product status")
+    # o simbolo '...' informa que o campo é obrigatório, o valor precisa ser passado
 
 
 class ProductIn(ProductBase, BaseSchemaMixin):

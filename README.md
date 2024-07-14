@@ -175,6 +175,19 @@ Vamos utilizar Pyenv + Poetry, link de como preparar o ambiente abaixo:
 
 [poetry-documentation](https://github.com/nayannanara/poetry-documentation/blob/master/poetry-documentation.md)
 
+## Desafio Final Resolução por Mário Apolinário
+
+- (1) Create
+    - Ao arquivo store\controllers\product.py foi adicionado o erro de exceção inerente ao create (linhas 12 a 22)
+    - Ao arquivo testes\controllers\test_product.py o erro de exceção é apresentado no controller (linhas 25 a 36)
+
+- (2) Update
+    - Ao arquivo store\controllers\product.py foi adicionado o erro de Not Found inerente ao patch (linhas 54 a 64)
+    - Ao arquivo testes\controllers\test_product.py o erro de Not Found é apresentado no controller (linhas 97 a 105)
+    
+
+
+
 ## Links uteis de documentação
 [mermaid](https://mermaid.js.org/)
 

@@ -1,3 +1,4 @@
+# Criando teste de Schemas
 from pydantic import ValidationError
 
 import pytest
@@ -6,7 +7,7 @@ from tests.factories import product_data
 
 
 def test_schemas_return_success():
-    data = product_data()
+    data = product_data ()
     product = ProductIn.model_validate(data)
 
     assert product.name == "Iphone 14 Pro Max"

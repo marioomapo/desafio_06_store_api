@@ -1,3 +1,4 @@
+# customizando exceções
 class BaseException(Exception):
     message: str = "Internal Server Error"
 

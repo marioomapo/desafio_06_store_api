@@ -21,7 +21,7 @@ class ProductUsecase:
         return ProductOut(**product_model.model_dump())
 
     async def get(self, id: UUID) -> ProductOut:
-        result = await self.collection.find_one({"id": id})
+        result = await self.collection.find_one({"id": id}) # dicionário chave e valor
 
         if not result:
             raise NotFoundException(message=f"Product not found with filter: {id}")
@@ -32,10 +32,10 @@ class ProductUsecase:
         return [ProductOut(**item) async for item in self.collection.find()]
 
     async def update(self, id: UUID, body: ProductUpdate) -> ProductUpdateOut:
-        result = await self.collection.find_one_and_update(
+        result = await self.collection.find_one_and_update( # retorna o documento
             filter={"id": id},
             update={"$set": body.model_dump(exclude_none=True)},
-            return_document=pymongo.ReturnDocument.AFTER,
+            return_document=pymongo.ReturnDocument.AFTER, # retorna o objeto após a atualização
         )
 
         return ProductUpdateOut(**result)

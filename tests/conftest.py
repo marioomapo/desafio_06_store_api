@@ -1,26 +1,28 @@
+# utilizado para guardar as features
 import pytest
-import asyncio
+import asyncio      
 
 from uuid import UUID
 from store.db.mongo import db_client
 from store.schemas.product import ProductIn, ProductUpdate
 from store.usecases.product import product_usecase
 from tests.factories import product_data, products_data
-from httpx import AsyncClient
+from httpx import AsyncClient #utilizado para o client
 
 
+# feature de Scopo na session
 @pytest.fixture(scope="session")
 def event_loop():
     loop = asyncio.get_event_loop_policy().new_event_loop()
     yield loop
     loop.close()
 
-
+# feature que permite a comunicação com o banco de dados
 @pytest.fixture
 def mongo_client():
     return db_client.get()
 
-
+# feature para utilizada para inserir dados no Banco (modalidade 1), aqui não serão mocado os resultados (modalidade 2) 
 @pytest.fixture(autouse=True)
 async def clear_collections(mongo_client):
     yield
@@ -31,7 +33,7 @@ async def clear_collections(mongo_client):
 
         await mongo_client.get_database()[collection_name].delete_many({})
 
-
+# feature para utilização client 
 @pytest.fixture
 async def client() -> AsyncClient:
     from store.main import app
@@ -44,12 +46,12 @@ async def client() -> AsyncClient:
 def products_url() -> str:
     return "/products/"
 
-
+# feature utilizada para rastreio
 @pytest.fixture
 def product_id() -> UUID:
     return UUID("fce6cc37-10b9-4a8e-a8b2-977df327001a")
 
-
+# feature para converter ProductData em ProductIn, a seu utilizada no UserCase
 @pytest.fixture
 def product_in(product_id):
     return ProductIn(**product_data(), id=product_id)
@@ -64,7 +66,7 @@ def product_up(product_id):
 async def product_inserted(product_in):
     return await product_usecase.create(body=product_in)
 
-
+# feature retorna um product in a partir do dicionário
 @pytest.fixture
 def products_in():
     return [ProductIn(**product) for product in products_data()]

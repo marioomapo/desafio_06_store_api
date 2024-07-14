@@ -1,3 +1,4 @@
+# funções que retornam objetos de maneira prática
 def product_data():
     return {
         "name": "Iphone 14 Pro Max",

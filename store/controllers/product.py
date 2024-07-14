@@ -1,3 +1,4 @@
+# criando rotas 
 from typing import List
 from fastapi import APIRouter, Body, Depends, HTTPException, Path, status
 from pydantic import UUID4
@@ -8,6 +9,17 @@ from store.usecases.product import ProductUsecase
 
 router = APIRouter(tags=["products"])
 
+# **********************************************************************
+# Mapeando o Erro de Exceção referente ao Create (Item 1)
+@router.create(path="/{id}", status_code=status.HTTP_204_NO_CONTENT)
+async def create(
+    id: UUID4 = Path(alias="id"), usecase: ProductUsecase = Depends()
+) -> None:
+    try:
+        await usecase.create(id=id)
+    except NotFoundException as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=exc.message)
+# **********************************************************************    
 
 @router.post(path="/", status_code=status.HTTP_201_CREATED)
 async def post(
@@ -39,6 +51,18 @@ async def patch(
 ) -> ProductUpdateOut:
     return await usecase.update(id=id, body=body)
 
+# **********************************************************************
+# Mapeando o Erro de Not Found referente ao Patch (Item 2)
+@router.patch(path="/{id}", status_code=status.HTTP_204_NO_CONTENT)
+async def patch(
+    id: UUID4 = Path(alias="id"), usecase: ProductUsecase = Depends()
+) -> None:
+    try:
+        await usecase.patch(id=id)
+    except NotFoundException as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=exc.message)
+# **********************************************************************
+
 
 @router.delete(path="/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete(
@@ -48,3 +72,4 @@ async def delete(
         await usecase.delete(id=id)
     except NotFoundException as exc:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=exc.message)
+
